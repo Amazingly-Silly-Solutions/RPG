@@ -22,6 +22,7 @@ public class AssRPG implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("Hello Fabric world!");
+		AssRPGEvents.initialize();
 	}
 
 	public static ResourceLocation id(String path) {

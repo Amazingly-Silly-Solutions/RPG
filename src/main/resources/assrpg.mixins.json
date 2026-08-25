@@ -1,14 +1,21 @@
 {
-	"required": true,
-	"package": "dev.beangal.assrpg.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ExampleMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "dev.beangal.assrpg.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "EnderManMixin",
+    "EnderManMixin$LeaveBlockMixin",
+    "EnderManMixin$TakeBlockMixin",
+    "ExampleMixin",
+    "FarmBlockMixin",
+    "LevelMixin",
+    "ServerExplosionMixin",
+    "ZombieMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }
