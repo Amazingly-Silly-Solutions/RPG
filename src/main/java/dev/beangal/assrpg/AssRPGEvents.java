@@ -9,31 +9,41 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import static dev.beangal.assrpg.AssRPG.LOGGER;
 
 public class AssRPGEvents {
     public static void initialize() {
-        PlayerBlockBreakEvents.BEFORE.register((level, player, blockPos, state, blockEntity) -> canModifyChunk(level, player, blockPos));
+        PlayerBlockBreakEvents.BEFORE.register((level, player, blockPos, state, blockEntity) -> {
+            boolean allowed = canModifyChunk(level, player, blockPos);
+
+            if (!allowed && player instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("assrpg.message.protected")));
+            }
+            return allowed;
+        });
 
         UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> {
-            if (player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof BlockItem) {
-                boolean allowed = canModifyChunk(level, player, hitResult.getBlockPos().relative(hitResult.getDirection()));
-
-                if (!allowed) {
-                    if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                        serverPlayer.containerMenu.sendAllDataToRemote();
-                    }
-                    return InteractionResult.FAIL;
+            if (!placingAndAllowed(player, level, hitResult) && !level.isClientSide()) {
+                if (player instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("assrpg.message.protected")));
                 }
+
+                return InteractionResult.FAIL;
             }
 
             return InteractionResult.PASS;
@@ -54,7 +64,24 @@ public class AssRPGEvents {
         });
     }
 
-    private static boolean canModifyChunk(Level level, @Nullable Player player, BlockPos blockPos) {
+    public static boolean placingAndAllowed(Player player, Level level, BlockHitResult hitResult) {
+        ItemStack heldItem = player.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (heldItem.getItem() instanceof BlockItem || heldItem.getItem() instanceof BucketItem) {
+            BlockPos placePos = hitResult.getBlockPos().relative(hitResult.getDirection());
+            BlockPos hitPos = hitResult.getBlockPos();
+            BlockState state = level.getBlockState(hitPos);
+
+            if (state.canBeReplaced()) {
+                placePos = hitPos;
+            }
+
+            return canModifyChunk(level, player, placePos);
+        }
+
+        return true;
+    }
+
+    public static boolean canModifyChunk(Level level, @Nullable Player player, BlockPos blockPos) {
         if (player != null && player.isCreative()) {
             return true;
         }

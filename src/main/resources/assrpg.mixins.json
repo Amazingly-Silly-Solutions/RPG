@@ -3,14 +3,18 @@
   "package": "dev.beangal.assrpg.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ChorusFlowerBlockMixin",
     "DecoratedPotBlockMixin",
     "EnderManMixin",
     "EnderManMixin$LeaveBlockMixin",
     "EnderManMixin$TakeBlockMixin",
     "ExampleMixin",
     "FarmBlockMixin",
+    "FireBlockMixin",
     "LevelMixin",
+    "PointedDripstoneBlockMixin",
     "ServerExplosionMixin",
+    "TurtleEggBlockMixin",
     "ZombieMixin"
   ],
   "injectors": {
