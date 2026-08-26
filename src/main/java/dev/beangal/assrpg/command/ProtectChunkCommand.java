@@ -1,15 +1,30 @@
 package dev.beangal.assrpg.command;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 
 public class ProtectChunkCommand {
+    public static LiteralArgumentBuilder<CommandSourceStack> buildBranch() {
+        return Commands.literal("protectchunk")
+                        .then(Commands.literal("single")
+                                .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                                        .then(Commands.argument("protected", BoolArgumentType.bool())
+                                                .executes(ProtectChunkCommand::single))))
+                        .then(Commands.literal("range")
+                                .then(Commands.argument("pos1", BlockPosArgument.blockPos())
+                                        .then(Commands.argument("pos2", BlockPosArgument.blockPos())
+                                                .then(Commands.argument("protected", BoolArgumentType.bool())
+                                                        .executes(ProtectChunkCommand::range)))));
+    }
+
     public static int single(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         CommandSourceStack source = context.getSource();
 

@@ -1,12 +1,11 @@
 package dev.beangal.assrpg;
 
-import com.mojang.brigadier.arguments.BoolArgumentType;
+import dev.beangal.assrpg.command.DungeonEntranceCommand;
 import dev.beangal.assrpg.command.ProtectChunkCommand;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
@@ -49,16 +48,11 @@ public class AssRPGEvents {
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             LOGGER.info("Registering commands...");
-            dispatcher.register(Commands.literal("protectchunk")
-                    .then(Commands.literal("single")
-                            .then(Commands.argument("pos", BlockPosArgument.blockPos())
-                                    .then(Commands.argument("protected", BoolArgumentType.bool())
-                                            .executes(ProtectChunkCommand::single))))
-                    .then(Commands.literal("range")
-                            .then(Commands.argument("pos1", BlockPosArgument.blockPos())
-                                    .then(Commands.argument("pos2", BlockPosArgument.blockPos())
-                                            .then(Commands.argument("protected", BoolArgumentType.bool())
-                                                    .executes(ProtectChunkCommand::range))))));
+            dispatcher.register(Commands.literal(AssRPG.MOD_ID)
+                    .requires(source -> source.hasPermission(2))
+                    .then(ProtectChunkCommand.buildBranch())
+                    .then(DungeonEntranceCommand.buildBranch())
+            );
         });
     }
 

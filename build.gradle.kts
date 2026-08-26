@@ -44,6 +44,8 @@ dependencies {
 	include("org.ladysnake.cardinal-components-api:cardinal-components-base:${providers.gradleProperty("cca_version").get()}")
 	modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-chunk:${providers.gradleProperty("cca_version").get()}")
 	include("org.ladysnake.cardinal-components-api:cardinal-components-chunk:${providers.gradleProperty("cca_version").get()}")
+	modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-entity:${providers.gradleProperty("cca_version").get()}")
+	include("org.ladysnake.cardinal-components-api:cardinal-components-entity:${providers.gradleProperty("cca_version").get()}")
 }
 
 tasks.processResources {

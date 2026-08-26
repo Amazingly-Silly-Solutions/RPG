@@ -6,5 +6,6 @@ public class AssRPGClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		AssRPGClientEvents.initialize();
+		AssRPGBlockEntityRenderers.initialize();
 	}
 }
