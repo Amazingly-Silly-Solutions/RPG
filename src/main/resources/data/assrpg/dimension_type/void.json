@@ -1,0 +1,21 @@
+ {
+  "coordinate_scale": 1.0,
+  "has_skylight": false,
+  "has_ceiling": false,
+  "has_ender_dragon_fight": false,
+  "ambient_light": 0,
+  "has_raids": false,
+  "piglin_safe": true,
+  "respawn_anchor_works": true,
+  "bed_works": true,
+  "has_fixed_time": false,
+  "ultrawarm": false,
+  "natural": false,
+  "monster_spawn_block_light_limit": 0,
+  "monster_spawn_light_level": 0,
+  "logical_height": 1024,
+  "min_y": -64,
+  "height": 1024,
+  "infiniburn": "#assrpg:void_infiniburn",
+  "effects": "minecraft:overworld"
+}

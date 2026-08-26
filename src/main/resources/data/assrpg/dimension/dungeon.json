@@ -1,0 +1,18 @@
+{
+  "type": "assrpg:void",
+  "generator": {
+    "type": "flat",
+    "settings": {
+      "biome": "minecraft:the_void",
+      "lakes": false,
+      "features": false,
+      "structure_overrides": [],
+      "layers": [
+        {
+          "height": 1,
+          "block": "minecraft:air"
+        }
+      ]
+    }
+  }
+}

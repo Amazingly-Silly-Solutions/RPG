@@ -75,9 +75,9 @@ public class DungeonEntranceBlock extends Block implements EntityBlock {
                     if (destWorld != null) {
                         player.teleportTo(
                                 destWorld,
-                                destPos.getX(),
+                                destPos.getX() + 0.5,
                                 destPos.getY(),
-                                destPos.getZ(),
+                                destPos.getZ() + 0.5,
                                 Collections.emptySet(),
                                 player.getYRot(),
                                 player.getXRot(),
