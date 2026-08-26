@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static dev.beangal.assrpg.AssRPGUtils.pistonPushingIntoProtectedChunk;
+import static dev.beangal.assrpg.AssRPGUtils.isEnteringProtectedChunk;
 
 @Mixin(FlowingFluid.class)
 public abstract class FlowingFluidMixin {
@@ -22,7 +22,7 @@ public abstract class FlowingFluidMixin {
 
         BlockPos prevPos = blockPos.relative(direction.getOpposite());
 
-        if (pistonPushingIntoProtectedChunk(prevPos, blockPos, serverLevel)) {
+        if (isEnteringProtectedChunk(prevPos, blockPos, serverLevel)) {
             ci.cancel();
         }
     }

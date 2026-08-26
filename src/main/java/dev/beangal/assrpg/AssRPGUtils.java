@@ -33,19 +33,23 @@ public class AssRPGUtils {
         };
 
         for (int[] direction : directions) {
-            LOGGER.info(pos.immutable().offset(direction[0], 0, direction[1]).toString());
             if (isChunkProtected(pos.immutable().offset(direction[0], 0, direction[1]), level)) {
-                LOGGER.warn(pos.immutable().offset(direction[0], 0, direction[1]).toString());
                 return true;
             }
         }
 
-        LOGGER.warn("done");
-
         return false;
     }
 
-    public static boolean pistonPushingIntoProtectedChunk(BlockPos prevPos, BlockPos blockPos, Level level) {
-        return nextToProtectedChunk(prevPos, level) && isChunkProtected(blockPos, level);
+    public static boolean isEnteringProtectedChunk(BlockPos sourcePos, BlockPos destinationPos, Level level) {
+        return nextToProtectedChunk(sourcePos, level) && isChunkProtected(destinationPos, level);
+    }
+
+    public static boolean isExitingProtectedChunk(BlockPos sourcePos, BlockPos destinationPos, Level level) {
+        return nextToProtectedChunk(destinationPos, level) && isChunkProtected(sourcePos, level);
+    }
+
+    public static boolean isCrossingProtectionBoundary(BlockPos sourcePos, BlockPos destinationPos, Level level) {
+        return isEnteringProtectedChunk(sourcePos, destinationPos, level) || isExitingProtectedChunk(sourcePos, destinationPos, level);
     }
 }
