@@ -1,6 +1,6 @@
 package dev.beangal.assrpg.mixin;
 
-import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
+import dev.beangal.assrpg.AssRPGUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class TurtleEggBlockMixin {
     @Inject(method = "stepOn", at = @At("HEAD"), cancellable = true)
     private void preventStepInProtectedChunks(Level level, BlockPos blockPos, BlockState blockState, Entity entity, CallbackInfo ci) {
-        if (AssRPGCardinalComponents.PROTECTED.get(level.getChunk(blockPos)).get()) {
+        if (AssRPGUtils.isChunkProtected(level.getChunk(blockPos))) {
             ci.cancel();
         }
     }
 
     @Inject(method = "fallOn", at = @At("HEAD"), cancellable = true)
     private void preventFallInProtectedChunks(Level level, BlockState blockState, BlockPos blockPos, Entity entity, float f, CallbackInfo ci) {
-        if (AssRPGCardinalComponents.PROTECTED.get(level.getChunk(blockPos)).get()) {
+        if (AssRPGUtils.isChunkProtected(level.getChunk(blockPos))) {
             ci.cancel();
         }
     }

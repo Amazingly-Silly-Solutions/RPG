@@ -1,6 +1,6 @@
 package dev.beangal.assrpg.mixin;
 
-import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
+import dev.beangal.assrpg.AssRPGUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.monster.EnderMan;
 import org.spongepowered.asm.mixin.Final;
@@ -20,7 +20,7 @@ public class EnderManMixin {
 
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
         private void canUse(CallbackInfoReturnable<Boolean> cir) {
-            if (AssRPGCardinalComponents.PROTECTED.get(this.enderman.level().getChunk(BlockPos.containing(this.enderman.getPosition(0f)))).get()) {
+            if (AssRPGUtils.isChunkProtected(this.enderman.level().getChunk(BlockPos.containing(this.enderman.getPosition(0f))))) {
                 cir.setReturnValue(false);
             }
         }
@@ -34,7 +34,7 @@ public class EnderManMixin {
 
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
         private void canUse(CallbackInfoReturnable<Boolean> cir) {
-            if (AssRPGCardinalComponents.PROTECTED.get(this.enderman.level().getChunk(BlockPos.containing(this.enderman.getPosition(0f)))).get()) {
+            if (AssRPGUtils.isChunkProtected(this.enderman.level().getChunk(BlockPos.containing(this.enderman.getPosition(0f))))) {
                 cir.setReturnValue(false);
             }
         }

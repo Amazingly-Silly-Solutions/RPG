@@ -1,6 +1,6 @@
 package dev.beangal.assrpg.mixin;
 
-import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
+import dev.beangal.assrpg.AssRPGUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class FireBlockMixin {
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void preventBreakInProtectedChunks(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource, CallbackInfo ci) {
-        if (AssRPGCardinalComponents.PROTECTED.get(serverLevel.getChunk(blockPos)).get()) {
+        if (AssRPGUtils.isChunkProtected(serverLevel.getChunk(blockPos))) {
             ci.cancel();
         }
     }

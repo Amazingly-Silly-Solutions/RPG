@@ -1,6 +1,6 @@
 package dev.beangal.assrpg.mixin;
 
-import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
+import dev.beangal.assrpg.AssRPGUtils;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PointedDripstoneBlockMixin {
     @Inject(method = "onProjectileHit", at = @At("HEAD"), cancellable = true)
     private void preventBreakInProtectedChunks(Level level, BlockState blockState, BlockHitResult blockHitResult, Projectile projectile, CallbackInfo ci) {
-        if (AssRPGCardinalComponents.PROTECTED.get(level.getChunk(blockHitResult.getBlockPos())).get()) {
+        if (AssRPGUtils.isChunkProtected(level.getChunk(blockHitResult.getBlockPos()))) {
             ci.cancel();
         }
     }

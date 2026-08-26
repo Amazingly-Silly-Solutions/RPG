@@ -1,6 +1,6 @@
 package dev.beangal.assrpg.mixin;
 
-import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
+import dev.beangal.assrpg.AssRPGUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ServerExplosion;
 import net.minecraft.server.level.ServerLevel;
@@ -22,7 +22,7 @@ public class ServerExplosionMixin {
     private void filterBlocksBeforeDestruction(List<BlockPos> list, CallbackInfo ci) {
         list.removeIf(pos -> {
             ChunkAccess chunk = this.level.getChunk(pos);
-            return AssRPGCardinalComponents.PROTECTED.get(chunk).get();
+            return AssRPGUtils.isChunkProtected(chunk);
         });
     }
 }

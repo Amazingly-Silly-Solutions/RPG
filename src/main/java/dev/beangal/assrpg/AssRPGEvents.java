@@ -2,7 +2,6 @@ package dev.beangal.assrpg;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import dev.beangal.assrpg.command.ProtectChunkCommand;
-import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -20,7 +19,6 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -86,8 +84,6 @@ public class AssRPGEvents {
             return true;
         }
 
-        ChunkAccess chunk = level.getChunk(blockPos);
-
-        return !AssRPGCardinalComponents.PROTECTED.get(chunk).get();
+        return !AssRPGUtils.isChunkProtected(level.getChunk(blockPos));
     }
 }

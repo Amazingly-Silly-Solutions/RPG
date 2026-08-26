@@ -1,6 +1,6 @@
 package dev.beangal.assrpg.mixin;
 
-import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
+import dev.beangal.assrpg.AssRPGUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.monster.Zombie;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ public class ZombieMixin {
     public void tick(CallbackInfo ci) {
         Zombie zombie = (Zombie) (Object) this;
         if (!zombie.level().isClientSide()) {
-            this.canBreakDoors = !AssRPGCardinalComponents.PROTECTED.get(zombie.level().getChunk(BlockPos.containing(zombie.getPosition(0f)))).get();
+            this.canBreakDoors = !AssRPGUtils.isChunkProtected(zombie.level().getChunk(BlockPos.containing(zombie.getPosition(0f))));
         }
     }
 }
