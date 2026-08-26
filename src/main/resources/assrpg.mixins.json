@@ -10,6 +10,7 @@
     "EnderManMixin$TakeBlockMixin",
     "FarmBlockMixin",
     "FireBlockMixin",
+    "WaterFluidMixin",
     "PointedDripstoneBlockMixin",
     "ServerExplosionMixin",
     "TurtleEggBlockMixin",
