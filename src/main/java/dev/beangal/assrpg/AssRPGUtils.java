@@ -44,4 +44,8 @@ public class AssRPGUtils {
 
         return false;
     }
+
+    public static boolean pistonPushingIntoProtectedChunk(BlockPos prevPos, BlockPos blockPos, Level level) {
+        return nextToProtectedChunk(prevPos, level) && isChunkProtected(blockPos, level);
+    }
 }

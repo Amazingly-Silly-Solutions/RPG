@@ -12,18 +12,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static dev.beangal.assrpg.AssRPGUtils.isChunkProtected;
-import static dev.beangal.assrpg.AssRPGUtils.nextToProtectedChunk;
+import static dev.beangal.assrpg.AssRPGUtils.pistonPushingIntoProtectedChunk;
 
 @Mixin(FlowingFluid.class)
-public abstract class WaterFluidMixin {
+public abstract class FlowingFluidMixin {
     @Inject(method = "spreadTo", at = @At("HEAD"), cancellable = true)
     private void cancelLiquidSpread(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState, Direction direction, FluidState fluidState, CallbackInfo ci) {
         if (!(levelAccessor instanceof ServerLevel serverLevel)) { return; }
 
         BlockPos prevPos = blockPos.relative(direction.getOpposite());
 
-        if (nextToProtectedChunk(prevPos, serverLevel) && isChunkProtected(blockPos, serverLevel)) {
+        if (pistonPushingIntoProtectedChunk(prevPos, blockPos, serverLevel)) {
             ci.cancel();
         }
     }
