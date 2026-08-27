@@ -1,8 +1,13 @@
 {
   "assrpg.message.protected": "§cThis chunk is protected!",
+  "block.assrpg.coin_pile": "Coin Pile",
   "block.assrpg.dungeon_entrance": "Dungeon Entrance",
   "block.assrpg.invisible_support": "Invisible Support",
+  "item.assrpg.coin": "Coin",
+  "item.assrpg.coin_pile": "Coin Pile",
   "item.assrpg.dungeon_entrance": "Dungeon Entrance",
   "item.assrpg.invisible_support": "Invisible Support",
-  "itemGroup.assrpg.blocks_group": "AssRPG Blocks"
+  "itemGroup.assrpg.blocks_group": "AssRPG Blocks",
+  "itemGroup.assrpg.items_group": "AssRPG Items",
+  "lore.assrpg.coin": "§7Right click to redeem"
 }

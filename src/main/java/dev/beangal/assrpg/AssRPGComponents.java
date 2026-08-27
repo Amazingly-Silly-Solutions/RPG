@@ -1,5 +1,6 @@
 package dev.beangal.assrpg;
 
+import dev.beangal.assrpg.component.CoinsComponent;
 import dev.beangal.assrpg.component.DungeonTimerComponent;
 import dev.beangal.assrpg.component.ProtectedComponent;
 import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
@@ -19,5 +20,6 @@ public class AssRPGComponents implements ChunkComponentInitializer, EntityCompon
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.registerForPlayers(AssRPGCardinalComponents.DUNGEON_TIMER, DungeonTimerComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(AssRPGCardinalComponents.COINS, CoinsComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
     }
 }

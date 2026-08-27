@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "assrpg:block/coin_pile"
+    }
+  }
+}

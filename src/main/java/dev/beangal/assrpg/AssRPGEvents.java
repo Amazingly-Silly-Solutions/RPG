@@ -1,5 +1,6 @@
 package dev.beangal.assrpg;
 
+import dev.beangal.assrpg.command.CoinsCommand;
 import dev.beangal.assrpg.command.DungeonEntranceCommand;
 import dev.beangal.assrpg.command.ProtectChunkCommand;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -52,6 +53,7 @@ public class AssRPGEvents {
                     .requires(source -> source.hasPermission(2))
                     .then(ProtectChunkCommand.buildBranch())
                     .then(DungeonEntranceCommand.buildBranch())
+                    .then(CoinsCommand.buildBranch())
             );
         });
     }

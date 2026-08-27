@@ -1,6 +1,7 @@
 package dev.beangal.assrpg.registry;
 
 import dev.beangal.assrpg.AssRPG;
+import dev.beangal.assrpg.block.CoinPileBlock;
 import dev.beangal.assrpg.block.DungeonEntranceBlock;
 import dev.beangal.assrpg.block.InvisibleSupportBlock;
 import net.minecraft.core.Registry;
@@ -20,6 +21,7 @@ import java.util.function.Function;
 public class AssRPGBlocks {
     public static final Block DUNGEON_ENTRANCE = register(DungeonEntranceBlock::new, BlockBehaviour.Properties.of().sound(SoundType.GLASS).strength(-1f, 30000f), "dungeon_entrance", true);
     public static final Block INVISIBLE_SUPPORT = register(InvisibleSupportBlock::new, BlockBehaviour.Properties.of().sound(SoundType.GLASS).strength(0f, 1f), "invisible_support", true);
+    public static final Block COIN_PILE = register(CoinPileBlock::new, BlockBehaviour.Properties.of().sound(SoundType.STONE).strength(1f, 1f), "coin_pile", true);
 
     @SuppressWarnings("unchecked")
     public static <T extends Block> T register(Function<BlockBehaviour.Properties, T> constructor, BlockBehaviour.Properties properties, String name, boolean shouldRegisterItem) {

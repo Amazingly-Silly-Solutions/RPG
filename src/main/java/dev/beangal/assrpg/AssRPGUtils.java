@@ -17,7 +17,6 @@ public class AssRPGUtils {
         return AssRPGCardinalComponents.PROTECTED.get(chunk).get();
     }
 
-
     public static boolean isChunkProtected(BlockPos pos, Level level) {
         return isChunkProtected(level.getChunkSource().getChunk(SectionPos.blockToSectionCoord(pos.getX()), SectionPos.blockToSectionCoord(pos.getZ()), false));
     }
