@@ -36,10 +36,12 @@ public class AssRPGModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         generateItemTexturedBlockModel(blockStateModelGenerator, AssRPGBlocks.DUNGEON_ENTRANCE);
+        generateItemTexturedBlockModel(blockStateModelGenerator, AssRPGBlocks.INVISIBLE_SUPPORT);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
         itemModelGenerator.generateFlatItem(AssRPGBlocks.DUNGEON_ENTRANCE.asItem(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(AssRPGBlocks.INVISIBLE_SUPPORT.asItem(), ModelTemplates.FLAT_ITEM);
     }
 }

@@ -16,8 +16,11 @@ public class AssRPGLanguageProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add("assrpg.message.protected", "§cThis chunk is protected!");
+        translationBuilder.add("itemGroup.assrpg.blocks_group", "AssRPG Blocks");
 
         translationBuilder.add(AssRPGBlocks.DUNGEON_ENTRANCE, "Dungeon Entrance");
         translationBuilder.add(AssRPGBlocks.DUNGEON_ENTRANCE.asItem(), "Dungeon Entrance");
+        translationBuilder.add(AssRPGBlocks.INVISIBLE_SUPPORT, "Invisible Support");
+        translationBuilder.add(AssRPGBlocks.INVISIBLE_SUPPORT.asItem(), "Invisible Support");
     }
 }

@@ -2,6 +2,7 @@ package dev.beangal.assrpg;
 
 import dev.beangal.assrpg.registry.AssRPGBlockEntities;
 import dev.beangal.assrpg.registry.AssRPGBlocks;
+import dev.beangal.assrpg.registry.AssRPGCreativeTabs;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.ResourceLocation;
@@ -27,6 +28,7 @@ public class AssRPG implements ModInitializer {
 		AssRPGEvents.initialize();
 		AssRPGBlocks.initialize();
 		AssRPGBlockEntities.initialize();
+		AssRPGCreativeTabs.initialize();
 	}
 
 	public static ResourceLocation id(String path) {
