@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "assrpg:block/coin_pile"
+    "coins=1": {
+      "model": "assrpg:block/coin_pile_1"
+    },
+    "coins=2": {
+      "model": "assrpg:block/coin_pile_2"
+    },
+    "coins=3": {
+      "model": "assrpg:block/coin_pile_3"
+    },
+    "coins=4": {
+      "model": "assrpg:block/coin_pile_4"
+    },
+    "coins=5": {
+      "model": "assrpg:block/coin_pile_5"
     }
   }
 }

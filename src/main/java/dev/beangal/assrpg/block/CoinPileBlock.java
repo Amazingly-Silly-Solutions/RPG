@@ -1,30 +1,52 @@
 package dev.beangal.assrpg.block;
 
-import dev.beangal.assrpg.registry.AssRPGCardinalComponents;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.beangal.assrpg.registry.AssRPGItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.server.TickTask;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-public class CoinPileBlock extends Block {
+public class CoinPileBlock extends FallingBlock {
+    public static final int MAX_SIZE = 5;
+    private static final VoxelShape SHAPE = Shapes.box(0.1, 0.0, 0.1, 0.9, 1.0, 0.9);
+    public static final IntegerProperty COINS = IntegerProperty.create("coins", 1, MAX_SIZE);
+    public static final MapCodec<CoinPileBlock> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> instance.group(propertiesCodec()).apply(instance, CoinPileBlock::new)
+    );
+
     public CoinPileBlock(Properties properties) {
         super(properties);
+
+        registerDefaultState(defaultBlockState().setValue(COINS, 1));
     }
-    private static final VoxelShape SHAPE = Shapes.block();
-    private static final VoxelShape COLLISION = Shapes.empty();
+
+    @Override
+    protected @NotNull MapCodec<? extends FallingBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(COINS);
+    }
 
     @Override
     protected @NotNull VoxelShape getOcclusionShape(BlockState blockState) {
-        return COLLISION;
+        return SHAPE;
     }
 
     @Override
@@ -34,7 +56,7 @@ public class CoinPileBlock extends Block {
 
     @Override
     protected @NotNull VoxelShape getCollisionShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        return COLLISION;
+        return SHAPE;
     }
 
     @Override
@@ -43,10 +65,57 @@ public class CoinPileBlock extends Block {
     }
 
     @Override
-    protected void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (!level.isClientSide() && entity instanceof ServerPlayer player) {
-            AssRPGCardinalComponents.COINS.get(player).add(level.getRandom().nextInt(5) + 8);
-            level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+    protected void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
+        BlockPos belowPos = blockPos.below();
+        BlockState belowState = serverLevel.getBlockState(belowPos);
+        int currentCoins = blockState.getValue(COINS);
+
+        if (belowState.is(this)) {
+            int belowCoins = belowState.getValue(COINS);
+
+            if (belowCoins < MAX_SIZE) {
+                int spaceLeft = MAX_SIZE - belowCoins;
+                int transfer = Math.min(spaceLeft, currentCoins);
+
+                int newBelowCoins = belowCoins + transfer;
+                int newCurrentCoins = currentCoins - transfer;
+
+                serverLevel.setBlockAndUpdate(belowPos, belowState.setValue(COINS, newBelowCoins));
+
+                if (newCurrentCoins > 0) {
+                    serverLevel.setBlockAndUpdate(blockPos, blockState.setValue(COINS, newCurrentCoins));
+                    serverLevel.scheduleTick(blockPos, this, 2);
+                } else {
+                    serverLevel.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+                }
+            }
+        }
+
+        super.tick(blockState, serverLevel, blockPos, randomSource);
+    }
+
+    @Override
+    public @NotNull BlockState playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
+        int currentCoins = blockState.getValue(COINS);
+
+        ItemStack drop = AssRPGItems.COIN.getDefaultInstance();
+        drop.setCount(level.getRandom().nextInt(4, 9));
+        popResource(level, blockPos, drop);
+
+        if (currentCoins > 1) {
+            BlockState newState = blockState.setValue(COINS, currentCoins - 1);
+            level.setBlock(blockPos, newState, Block.UPDATE_ALL);
+            level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, blockPos, Block.getId(blockState));
+
+            if (level instanceof ServerLevel serverLevel) {
+                serverLevel.getServer().schedule(new TickTask(serverLevel.getServer().getTickCount(), () -> {
+                    serverLevel.setBlock(blockPos, newState, Block.UPDATE_ALL);
+                }));
+            }
+
+            return newState;
+        } else {
+            return super.playerWillDestroy(level, blockPos, blockState, player);
         }
     }
 }

@@ -16,7 +16,6 @@ public class AssRPGBlockLootTableProvider extends FabricBlockLootTableProvider {
     @Override
     public void generate() {
         this.add(AssRPGBlocks.INVISIBLE_SUPPORT, LootTable.lootTable());
-
-        dropSelf(AssRPGBlocks.COIN_PILE);
+        this.add(AssRPGBlocks.COIN_PILE, LootTable.lootTable());
     }
 }

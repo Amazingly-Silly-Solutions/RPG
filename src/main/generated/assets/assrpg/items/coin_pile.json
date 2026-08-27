@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "assrpg:block/coin_pile"
+    "model": "assrpg:block/coin_pile_3"
   }
 }
