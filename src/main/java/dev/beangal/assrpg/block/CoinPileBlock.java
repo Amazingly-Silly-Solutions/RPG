@@ -2,13 +2,11 @@ package dev.beangal.assrpg.block;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.beangal.assrpg.registry.AssRPGItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -97,10 +95,6 @@ public class CoinPileBlock extends FallingBlock {
     @Override
     public @NotNull BlockState playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
         int currentCoins = blockState.getValue(COINS);
-
-        ItemStack drop = AssRPGItems.COIN.getDefaultInstance();
-        drop.setCount(level.getRandom().nextInt(4, 9));
-        popResource(level, blockPos, drop);
 
         if (currentCoins > 1) {
             BlockState newState = blockState.setValue(COINS, currentCoins - 1);
