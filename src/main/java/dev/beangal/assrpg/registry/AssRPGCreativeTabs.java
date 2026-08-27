@@ -26,7 +26,10 @@ public class AssRPGCreativeTabs {
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, BLOCKS_GROUP_KEY, BLOCKS_GROUP);
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ITEMS_GROUP_KEY, ITEMS_GROUP);
 
-        ItemGroupEvents.modifyEntriesEvent(BLOCKS_GROUP_KEY).register(itemGroup -> itemGroup.accept(AssRPGBlocks.INVISIBLE_SUPPORT));
+        ItemGroupEvents.modifyEntriesEvent(BLOCKS_GROUP_KEY).register(itemGroup -> {
+            itemGroup.accept(AssRPGBlocks.INVISIBLE_SUPPORT);
+            itemGroup.accept(AssRPGBlocks.COIN_PILE);
+        });
         ItemGroupEvents.modifyEntriesEvent(ITEMS_GROUP_KEY).register(itemGroup -> itemGroup.accept(AssRPGItems.COIN));
     }
 }
