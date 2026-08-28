@@ -38,5 +38,7 @@ public class AssRPGBlockLootTableProvider extends FabricBlockLootTableProvider {
                                 ).build()
                 )
         );
+
+        dropSelf(AssRPGBlocks.GLINT_LAMP);
     }
 }

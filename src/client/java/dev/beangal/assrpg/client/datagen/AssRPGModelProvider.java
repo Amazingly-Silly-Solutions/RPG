@@ -2,6 +2,7 @@ package dev.beangal.assrpg.client.datagen;
 
 import dev.beangal.assrpg.AssRPG;
 import dev.beangal.assrpg.block.CoinPileBlock;
+import dev.beangal.assrpg.block.GlintLampBlock;
 import dev.beangal.assrpg.registry.AssRPGBlocks;
 import dev.beangal.assrpg.registry.AssRPGItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
@@ -12,10 +13,7 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.blockstates.Variant;
 import net.minecraft.client.data.models.blockstates.VariantProperties;
-import net.minecraft.client.data.models.model.ItemModelUtils;
-import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.data.models.model.TextureMapping;
-import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.data.models.model.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -43,6 +41,7 @@ public class AssRPGModelProvider extends FabricModelProvider {
         generateItemTexturedBlockModel(blockStateModelGenerator, AssRPGBlocks.DUNGEON_ENTRANCE);
         generateItemTexturedBlockModel(blockStateModelGenerator, AssRPGBlocks.INVISIBLE_SUPPORT);
         generateCoinPile(blockStateModelGenerator);
+        generateLamp(blockStateModelGenerator, AssRPGBlocks.GLINT_LAMP);
     }
 
     @Override
@@ -55,6 +54,23 @@ public class AssRPGModelProvider extends FabricModelProvider {
                 AssRPGBlocks.COIN_PILE.asItem(),
                 ItemModelUtils.plainModel(AssRPG.id("block/coin_pile_3"))
         );
+    }
+
+    public void generateLamp(BlockModelGenerators blockStateModelGenerator, Block block) {
+        PropertyDispatch.C1<Boolean> variantMap = PropertyDispatch.property(GlintLampBlock.LIT);
+
+        ResourceLocation offModel = TexturedModel.CUBE.create(block, blockStateModelGenerator.modelOutput);
+        ResourceLocation onModel = ModelTemplates.CUBE_ALL.createWithSuffix(block, "_lit",
+                new TextureMapping().put(TextureSlot.ALL, BuiltInRegistries.BLOCK.getKey(block)
+                        .withPrefix("block/")
+                        .withSuffix("_lit")),
+                blockStateModelGenerator.modelOutput);
+
+        variantMap.select(false, Variant.variant().with(VariantProperties.MODEL, offModel));
+        variantMap.select(true, Variant.variant().with(VariantProperties.MODEL, onModel));
+
+        blockStateModelGenerator.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block).with(variantMap));
+        blockStateModelGenerator.registerSimpleItemModel(block, offModel);
     }
 
     private void generateCoinPile(BlockModelGenerators blockStateModelGenerator) {

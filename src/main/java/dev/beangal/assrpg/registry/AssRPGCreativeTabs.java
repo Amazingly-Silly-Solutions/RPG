@@ -29,6 +29,7 @@ public class AssRPGCreativeTabs {
         ItemGroupEvents.modifyEntriesEvent(BLOCKS_GROUP_KEY).register(itemGroup -> {
             itemGroup.accept(AssRPGBlocks.INVISIBLE_SUPPORT);
             itemGroup.accept(AssRPGBlocks.COIN_PILE);
+            itemGroup.accept(AssRPGBlocks.GLINT_LAMP);
         });
         ItemGroupEvents.modifyEntriesEvent(ITEMS_GROUP_KEY).register(itemGroup -> itemGroup.accept(AssRPGItems.COIN));
     }

@@ -1,6 +1,7 @@
 package dev.beangal.assrpg.client;
 
 import dev.beangal.assrpg.client.datagen.AssRPGBlockLootTableProvider;
+import dev.beangal.assrpg.client.datagen.AssRPGBlockTagProvider;
 import dev.beangal.assrpg.client.datagen.AssRPGLanguageProvider;
 import dev.beangal.assrpg.client.datagen.AssRPGModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -13,5 +14,6 @@ public class AssRPGDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(AssRPGModelProvider::new);
 		pack.addProvider(AssRPGLanguageProvider::new);
 		pack.addProvider(AssRPGBlockLootTableProvider::new);
+		pack.addProvider(AssRPGBlockTagProvider::new);
 	}
 }

@@ -11,6 +11,8 @@ public class AssRPGClient implements ClientModInitializer {
 		AssRPGClientEvents.initialize();
 		AssRPGBlockEntityRenderers.initialize();
 
-		BlockRenderLayerMap.INSTANCE.putBlock(AssRPGBlocks.COIN_PILE, RenderType.cutout());
+		BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
+				AssRPGBlocks.COIN_PILE,
+				AssRPGBlocks.GLINT_LAMP);
 	}
 }

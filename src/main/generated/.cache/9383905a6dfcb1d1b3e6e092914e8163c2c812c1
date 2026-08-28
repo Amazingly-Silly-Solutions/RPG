@@ -1,11 +1,15 @@
 // 1.21.4	-999999999-01-01T00:00:00	AssRPG/Model Definitions
 925b14e87d049f8a372a8b8979e4b16098cc64ac assets/assrpg/blockstates/coin_pile.json
 25ac4d34df5da8513046d257bba7b12435385d3f assets/assrpg/blockstates/dungeon_entrance.json
+f98081cbea709b91188f3b6c9dfe1ec85210d3e0 assets/assrpg/blockstates/glint_lamp.json
 98f006d21546b67dd385b1cdbc97a36b961c2b8a assets/assrpg/blockstates/invisible_support.json
 e9250dd9985b43d702f1be5099b9ed7e395713a1 assets/assrpg/items/coin.json
 6f7f8d8c51edaf38ddf5f76a8ae287785447ddeb assets/assrpg/items/coin_pile.json
 8a6aea33ae7cbcdd3dbea52e075006757d7bdeb5 assets/assrpg/items/dungeon_entrance.json
+48083ea720424237d20884137ddecd32abd50671 assets/assrpg/items/glint_lamp.json
 bfce9f33265111a8260b62aba2e8fa68e793c163 assets/assrpg/items/invisible_support.json
+b030ff92cfe1a89258e97e235d6040246b93ae58 assets/assrpg/models/block/glint_lamp.json
+4ca70f2e19605b62ebbdcae11b7247243e807d5e assets/assrpg/models/block/glint_lamp_lit.json
 4ffc437038215e98506cde7d4c90519df2a4d947 assets/assrpg/models/dungeon_entrance.json
 5fd284c62469064083157d0962ff70cd7056d72e assets/assrpg/models/invisible_support.json
 259fb37a9e73089b5de4900e125559dd901aea0e assets/assrpg/models/item/coin.json

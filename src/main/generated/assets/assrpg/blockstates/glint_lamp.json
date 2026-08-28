@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "assrpg:block/glint_lamp"
+    },
+    "lit=true": {
+      "model": "assrpg:block/glint_lamp_lit"
+    }
+  }
+}

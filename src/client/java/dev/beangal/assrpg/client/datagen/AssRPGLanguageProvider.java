@@ -27,6 +27,9 @@ public class AssRPGLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(AssRPGBlocks.INVISIBLE_SUPPORT.asItem(), "Invisible Support");
         translationBuilder.add(AssRPGBlocks.COIN_PILE, "Coin Pile");
         translationBuilder.add(AssRPGBlocks.COIN_PILE.asItem(), "Coin Pile");
+        translationBuilder.add(AssRPGBlocks.GLINT_LAMP, "Glint Lamp");
+        translationBuilder.add(AssRPGBlocks.GLINT_LAMP.asItem(), "Glint Lamp");
+
         translationBuilder.add(AssRPGItems.COIN, "Coin");
     }
 }

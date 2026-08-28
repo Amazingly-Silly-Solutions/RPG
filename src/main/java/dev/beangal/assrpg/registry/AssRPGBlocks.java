@@ -3,6 +3,7 @@ package dev.beangal.assrpg.registry;
 import dev.beangal.assrpg.AssRPG;
 import dev.beangal.assrpg.block.CoinPileBlock;
 import dev.beangal.assrpg.block.DungeonEntranceBlock;
+import dev.beangal.assrpg.block.GlintLampBlock;
 import dev.beangal.assrpg.block.InvisibleSupportBlock;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,6 +23,8 @@ public class AssRPGBlocks {
     public static final Block DUNGEON_ENTRANCE = register(DungeonEntranceBlock::new, BlockBehaviour.Properties.of().sound(SoundType.GLASS).strength(-1f, 30000f), "dungeon_entrance", true);
     public static final Block INVISIBLE_SUPPORT = register(InvisibleSupportBlock::new, BlockBehaviour.Properties.of().sound(SoundType.GLASS).strength(0f, 1f), "invisible_support", true);
     public static final Block COIN_PILE = register(CoinPileBlock::new, BlockBehaviour.Properties.of().sound(SoundType.CHAIN).strength(0f, 1f), "coin_pile", true);
+    public static final Block GLINT_LAMP = register(GlintLampBlock::new, BlockBehaviour.Properties.of().sound(SoundType.GLASS)
+            .strength(50.0F, 1200.0F).emissiveRendering((state, blockGetter, blockPos) -> state.getValue(GlintLampBlock.LIT)).requiresCorrectToolForDrops().lightLevel((state) -> state.getValue(GlintLampBlock.LIT) ? 15 : 0), "glint_lamp", true);
 
     @SuppressWarnings("unchecked")
     public static <T extends Block> T register(Function<BlockBehaviour.Properties, T> constructor, BlockBehaviour.Properties properties, String name, boolean shouldRegisterItem) {
