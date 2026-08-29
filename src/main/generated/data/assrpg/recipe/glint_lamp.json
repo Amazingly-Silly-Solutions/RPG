@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": "minecraft:amethyst_shard",
+    "O": "minecraft:obsidian",
+    "R": "minecraft:redstone"
+  },
+  "pattern": [
+    " A ",
+    "AOA",
+    " R "
+  ],
+  "result": {
+    "count": 4,
+    "id": "assrpg:glint_lamp"
+  }
+}
