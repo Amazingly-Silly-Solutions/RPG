@@ -11,7 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.awt.*;
 import java.util.Objects;
 
 public class DungeonEntranceBlockEntity extends BlockEntity {
@@ -19,6 +18,7 @@ public class DungeonEntranceBlockEntity extends BlockEntity {
     public int target_y = 0;
     public int target_z = 0;
     public ResourceKey<Level> target_dimension = ResourceKey.create(Registries.DIMENSION, ResourceLocation.withDefaultNamespace("overworld"));
+    public int time = 60;
 
     public DungeonEntranceBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(AssRPGBlockEntities.DUNGEON_ENTERANCE_BLOCK_ENTITY, blockPos, blockState);
@@ -38,6 +38,7 @@ public class DungeonEntranceBlockEntity extends BlockEntity {
         target_y = compoundTag.getInt("target_y");
         target_z = compoundTag.getInt("target_z");
         target_dimension = ResourceKey.create(Registries.DIMENSION, Objects.requireNonNullElse(ResourceLocation.tryParse(compoundTag.getString("target_dimension")), ResourceLocation.withDefaultNamespace("overworld")));
+        time = compoundTag.getInt("time");
 
         super.loadAdditional(compoundTag, provider);
     }
@@ -48,6 +49,7 @@ public class DungeonEntranceBlockEntity extends BlockEntity {
         compoundTag.putInt("target_y", target_y);
         compoundTag.putInt("target_z", target_z);
         compoundTag.putString("target_dimension", target_dimension.location().toString());
+        compoundTag.putInt("time", time);
 
         super.saveAdditional(compoundTag, provider);
     }

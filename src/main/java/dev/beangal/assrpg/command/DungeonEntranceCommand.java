@@ -1,5 +1,6 @@
 package dev.beangal.assrpg.command;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import dev.beangal.assrpg.registry.AssRPGBlocks;
@@ -24,7 +25,8 @@ public class DungeonEntranceCommand {
         return Commands.literal("dungeonentrance")
                 .then(Commands.argument("target_pos", BlockPosArgument.blockPos())
                         .then(Commands.argument("target_dimension", DimensionArgument.dimension())
-                                .executes(DungeonEntranceCommand::execute)));
+                                .then(Commands.argument("time", IntegerArgumentType.integer(0, 300))
+                                    .executes(DungeonEntranceCommand::execute))));
     }
 
     private static int execute(CommandContext<CommandSourceStack> context) {
@@ -38,6 +40,7 @@ public class DungeonEntranceCommand {
         try {
             BlockPos targetPos = BlockPosArgument.getLoadedBlockPos(context, "target_pos");
             ServerLevel targetDimWorld = DimensionArgument.getDimension(context, "target_dimension");
+            int time = IntegerArgumentType.getInteger(context, "time");
             ResourceKey<Level> targetDimKey = targetDimWorld.dimension();
 
             ItemStack entranceStack = new ItemStack(AssRPGBlocks.DUNGEON_ENTRANCE.asItem());
@@ -47,6 +50,7 @@ public class DungeonEntranceCommand {
             blockEntityData.putInt("target_y", targetPos.getY());
             blockEntityData.putInt("target_z", targetPos.getZ());
             blockEntityData.putString("target_dimension", targetDimKey.location().toString());
+            blockEntityData.putInt("time", time);
             blockEntityData.putString("id", "assrpg:dungeon_entrance");
 
             CustomData blockEntityComponent = CustomData.of(blockEntityData);

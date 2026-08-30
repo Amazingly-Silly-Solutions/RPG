@@ -66,7 +66,7 @@ public class DungeonEntranceBlock extends Block implements EntityBlock {
                 DungeonTimerComponent timer = AssRPGCardinalComponents.DUNGEON_TIMER.get(player);
                 timer.setInsidePortal(true);
 
-                if (timer.getTicks() >= 60) {
+                if (timer.getTicks() >= blockEntity.time) {
                     timer.setTicks(0);
 
                     ServerLevel destWorld = player.server.getLevel(blockEntity.getTargetDimension());
